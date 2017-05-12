@@ -93,3 +93,15 @@ There are three helper modules used to perform the desired functionality on the 
 	list(), float, float
 
 ```
+
+##Usage
+
+```
+	1. Load and run the android applicaiton on the android device.
+	2. Run python SPP-loopback.py -C 1 to start the bluetooth server on the Intel edison.
+```
+
+##References
+
+[1]http://www.amd.e-technik.uni-rostock.de/ma/gol/lectures/wirlec/bluetooth_info/rfcomm.html
+
