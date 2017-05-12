@@ -39,8 +39,11 @@ calculated based on this average acceleration. The current position and previous
 is appended to a queue which the handler is able to access. This process repeats from this point.
 
 There are three helper modules used to perform the desired functionality on the server side. 
-```
-- *get_accel.py* - This module contains the get_acceleration helper method that reads the raw acceleration and returns processed acceleration.
+
+- *get_accel.py* - This module contains the get_acceleration helper method that reads the raw acceleration and returns
+ processed acceleration.
+```    
+    get_acceleration
     
     This method reads raw acceleration from the accelerometer, removes the noise and effect of gravity
     to provide with the final processed values.
@@ -52,6 +55,6 @@ There are three helper modules used to perform the desired functionality on the 
     Output:
     x,y,z   - list()
     p_accel - list()
-- **
+
 
 ```
