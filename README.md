@@ -58,3 +58,38 @@ There are three helper modules used to perform the desired functionality on the 
 
 
 ```
+- *intialize.py* - This module is used when the accelerometer first connects with the Edison.
+```    
+    intialize
+    
+    This helper method is responsible for initializing the connection between edison and the Adxl345.
+    It obtains an handler to interface with the accelerometer. 
+    The method also obtains obtains an initial calibration of the values based on the position of the accelerometer. 
+    Input:
+    void
+
+    Return:
+    myAccel -> Object handler of Adxl345
+    init_values -> list()
+
+```
+
+- *update_pos.py* - This module contains the helper method which computes the position of the pen/accelermeter from the
+ acceleration values using the kinematic equations.
+```    
+	compute_position
+	
+	This helper method uses the kinematic equations to compute the exact position of the accelerometer from the 
+	linear acceleration obtained. 
+	
+	Input:
+	accel 		- list(list)
+	init_position 	- list()
+	delta_t		- float
+	u_x		- float
+	u_y 		- float
+	
+	Return:
+	list(), float, float
+
+```
