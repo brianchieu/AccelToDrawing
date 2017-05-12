@@ -54,16 +54,6 @@ public class BluetoothActivity extends Activity {
                 drawView.clear();
             }
         });
-        /*On.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                try{
-                    on(v);
-                }
-                catch (IOException e){
-                    ;
-                }
-            }
-        }); */
 
 
 
@@ -166,7 +156,6 @@ public class BluetoothActivity extends Activity {
                 String v = read(); //Get version from Edison
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
