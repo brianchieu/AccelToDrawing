@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+"""
+This module is responsible for spawning the bluetooth server on the Edison. It's also responsible for 
+reading displacement values from the queue and sending it to the android client on demand. 
+"""
+
 from __future__ import absolute_import, print_function, unicode_literals
 
 from optparse import OptionParser, make_option
@@ -20,13 +25,13 @@ try:
 except ImportError:
   import gobject as GObject
 
-class Profile(dbus.service.Object):
+class Profile(dbus.service.Object):				#Class to define and declare a bluetooth profile
 	fd = -1
 	q = Queue()
 
 	@dbus.service.method("org.bluez.Profile1",
 					in_signature="", out_signature="")
-	def Release(self):
+	def Release(self):					#Class Method to release a bluethooth device 
 		print("Release")
 		mainloop.quit()
 
@@ -37,25 +42,25 @@ class Profile(dbus.service.Object):
 
 	@dbus.service.method("org.bluez.Profile1",
 				in_signature="oha{sv}", out_signature="")
-	def NewConnection(self, path, fd, properties):
+	def NewConnection(self, path, fd, properties):		#Class method reponsible for establishing a new connection
 		self.fd = fd.take()
 		print("NewConnection(%s, %d)" % (path, self.fd))
 
 
-		server_sock = socket.fromfd(self.fd, socket.AF_UNIX, socket.SOCK_STREAM)
+		server_sock = socket.fromfd(self.fd, socket.AF_UNIX, socket.SOCK_STREAM)	#Initialize the socket handler
 		server_sock.setblocking(1)
 		server_sock.send("This is Edison SPP loopback test\nAll data will be loopback\nPlease start:\n")
 
 		try:
 		    while True:
-		        data = server_sock.recv(1024)
-		        print("received: %s" % data)
-		        data = Profile.q.get()
+		        data = server_sock.recv(1024)			#Receive the request from the Android client
+		        print("received: %s" % data)		
+		        data = Profile.q.get()				#Obtain the first received value in the queue
                         q.task_done()
-		        print(data)
-                        #server_sock.send("%s" % data)
-                        server_sock.send("hello")
-			#server_sock.send("looping back: %s\n" % main(myAccel, q))
+
+			data = str(data[0]) + ',' + str(data[1])	#Prepare the data packet to be sent
+			server_sock.send("%s\n" % data)			#Send the data packet via the socket established
+
 		except IOError:
 		    pass
 
