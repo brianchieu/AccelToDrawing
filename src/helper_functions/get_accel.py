@@ -1,15 +1,27 @@
-
-g = 980.665
-thresh = 30
-delta_t = 0.05
-no_of_samples = 1
-no_of_init_samples = 20
+"""
+This module contains the get_acceleration helper method that reads the raw acceleration and returns processed acceleration.
+"""
+#Constants
+g = 980.665         #Acceleration due to gravity, upto 3 decimal points.
 
 def get_acceleration(myAccel, args):
-    thresh = args[0]
-    alpha = args[1]
-    p_accel = args[2]
-    init_values = args[3]
+    """
+    This method reads raw acceleration from the accelerometer, removes the noise and effect of gravity
+    to provide with the final processed values.
+    
+    Input:
+    myAccel - an object handler to the adxl345 accelerometer
+    args - list()
+    
+    Output:
+    x,y,z   - list()
+    p_accel - list()
+    """
+    thresh = args[0]        #Threshold to remove noise
+    alpha = args[1]         #senisitivy factor --> that alters the rate at which the components of 'g' changes 
+                            #with change of angle
+    p_accel = args[2]       #Previous value of acceleration 
+    init_values = args[3]   #The initial values of acceleration obtained during calibiration 
 
     myAccel.update()
     accel = myAccel.getAcceleration()
